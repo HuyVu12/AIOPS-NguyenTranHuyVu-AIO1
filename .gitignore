@@ -1,3 +1,7 @@
 NAB
 .venv
 __pycache__/
+.gitignore
+materials
+datasets
+note-ai
