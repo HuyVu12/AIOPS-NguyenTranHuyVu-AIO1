@@ -1,7 +1,6 @@
-NAB
 .venv
-__pycache__/
-.gitignore
-materials
 datasets
+__pycache__/
+gitignore
+materials
 note-ai

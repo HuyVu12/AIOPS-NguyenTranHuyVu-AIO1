@@ -1,0 +1,11 @@
+template_id,template,count
+T_002,BLOCK* NameSystem.addStoredBlock: blockMap updated: <*> is added to <*> size <*>,314
+T_001,PacketResponder <*> for block <*> terminating,311
+T_003,Received block <*> of size <*> from <*>,292
+T_004,Receiving block <*> src: <*> dest: <*>,292
+T_007,Deleting block <*> file <*>,263
+T_010,BLOCK* NameSystem.delete: <*> is added to invalidSet of <*>,224
+T_005,BLOCK* NameSystem.allocateBlock: <*> <*>,115
+T_009,<*> exception while serving <*> to <*>,80
+T_008,<*> Served block <*> to <*>,80
+T_006,Verification succeeded for <*>,20
