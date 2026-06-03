@@ -7,7 +7,7 @@ from queue import Empty, Queue
 from threading import Thread
 import math
 
-DATA_PATH = r"datasets\NAB\data\realKnownCause\ambient_temperature_system_failure.csv"
+DATA_PATH = r"datasets\NAB\data\realKnownCause\machine_temperature_system_failure.csv"
 OUTPUT_PATH = "features.json"
 WINDOW_SIZE = 12  # 12 rows * 5 mins = 60 mins (1 tiếng window)
 
