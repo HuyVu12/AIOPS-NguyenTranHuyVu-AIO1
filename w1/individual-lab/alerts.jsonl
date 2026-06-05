@@ -1,0 +1,5 @@
+{"timestamp": "2026-06-05T15:55:40.936+00:00", "type": "traffic_spike", "severity": "warning", "message": "Traffic rising: rps=278, latency=336ms, queue=40"}
+{"timestamp": "2026-06-05T15:55:53.623+00:00", "type": "traffic_spike", "severity": "critical", "message": "Traffic spike: rps=634, latency=1244ms, queue=208"}
+{"timestamp": "2026-06-05T15:56:06.300+00:00", "type": "traffic_spike", "severity": "critical", "message": "Traffic spike: rps=654, latency=1198ms, queue=174"}
+{"timestamp": "2026-06-05T15:56:19.011+00:00", "type": "traffic_spike", "severity": "critical", "message": "Traffic spike: rps=751, latency=1255ms, queue=208"}
+{"timestamp": "2026-06-05T15:56:31.681+00:00", "type": "traffic_spike", "severity": "critical", "message": "Traffic spike: rps=829, latency=1349ms, queue=204"}
