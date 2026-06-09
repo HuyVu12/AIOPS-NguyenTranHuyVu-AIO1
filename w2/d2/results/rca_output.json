@@ -1,0 +1,95 @@
+{
+  "clusters_analyzed": 3,
+  "results": [
+    {
+      "cluster_id": "c-000-000",
+      "graph_top3": [
+        [
+          "checkout-svc",
+          0.769
+        ],
+        [
+          "edge-lb",
+          0.728
+        ],
+        [
+          "payment-svc",
+          0.549
+        ]
+      ],
+      "root_cause": "payment-svc",
+      "class": "connection_pool_exhaustion",
+      "confidence": 0.549,
+      "actions": [
+        "Rollback to v3.1",
+        "Scale pool 50 → 100 cushion",
+        "Add pool monitor alert > 80%"
+      ],
+      "reasoning": "Matched historical incident INC-2025-11-08 with TF-IDF similarity 0.4904.",
+      "similar_incidents": [
+        "INC-2025-11-08",
+        "INC-2026-01-04",
+        "INC-2025-09-05"
+      ],
+      "method": "graph+retrieval"
+    },
+    {
+      "cluster_id": "c-004-000",
+      "graph_top3": [
+        [
+          "search-svc",
+          1.0
+        ],
+        [
+          "checkout-svc",
+          0.6
+        ]
+      ],
+      "root_cause": "search-svc",
+      "class": "n_plus_1",
+      "confidence": 1.0,
+      "actions": [
+        "Batch fetch related products",
+        "Add monitoring query count / request"
+      ],
+      "reasoning": "Matched historical incident INC-2026-01-29 with TF-IDF similarity 0.5317.",
+      "similar_incidents": [
+        "INC-2026-01-29",
+        "INC-2025-12-01",
+        "INC-2025-09-21"
+      ],
+      "method": "graph+retrieval"
+    },
+    {
+      "cluster_id": "c-005-000",
+      "graph_top3": [
+        [
+          "payment-svc",
+          1.0
+        ],
+        [
+          "notification-svc",
+          0.669
+        ],
+        [
+          "edge-lb",
+          0.6
+        ]
+      ],
+      "root_cause": "edge-lb",
+      "class": "ddos",
+      "confidence": 0.6,
+      "actions": [
+        "WAF rate-limit + Cloudflare proxy",
+        "Geographic rule"
+      ],
+      "reasoning": "Matched historical incident INC-2026-03-20 with TF-IDF similarity 0.5304.",
+      "similar_incidents": [
+        "INC-2026-03-20",
+        "INC-2025-12-12",
+        "INC-2025-08-17"
+      ],
+      "method": "graph+retrieval"
+    }
+  ]
+}
