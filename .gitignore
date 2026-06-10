@@ -5,3 +5,5 @@ gitignore
 materials
 note-ai
 slides
+note
+.env
