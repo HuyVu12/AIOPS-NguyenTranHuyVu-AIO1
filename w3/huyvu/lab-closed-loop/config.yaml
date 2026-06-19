@@ -1,0 +1,61 @@
+# Orchestrator configuration — closed_loop.py reads this at startup.
+
+alertmanager_url: "http://localhost:9093"
+prometheus_url: "http://localhost:9090"
+poll_interval_seconds: 15
+runbook_timeout_seconds: 30
+
+# Relative path from this config file to the baseline JSON
+baseline_path: "../data-pack/data/baseline.json"
+
+# ── Runbook map: alertname → script path (relative to this config file) ───────
+runbook_map:
+  HighLatency:    "runbooks/restart_service.sh"
+  HighErrorRate:  "runbooks/clear_cache.sh"
+  InstanceDown:   "runbooks/restart_service.sh"
+  # Stress S3: test hallucination defense (uncomment to trigger scenario 6)
+  # TestHallucination: "runbooks/nonexistent_runbook.sh"
+
+# ── Rollback map: alertname → rollback script ─────────────────────────────────
+# Defaults to the same runbook if an alert is absent from this map.
+rollback_map:
+  HighLatency:    "runbooks/restart_service.sh"
+  HighErrorRate:  "runbooks/restart_service.sh"
+  InstanceDown:   "runbooks/restart_service.sh"
+
+# ── Runbook registry (whitelist for decision validation — Stress S3) ──────────
+# Only runbooks listed here can be executed. Names absent from this list
+# trigger DECISION_VALIDATION_FAILED and no subprocess is spawned.
+runbook_registry:
+  - "runbooks/restart_service.sh"
+  - "runbooks/clear_cache.sh"
+  - "runbooks/scale_replicas.sh"
+  - "runbooks/multi_step_deploy.sh"
+
+# ── Blast-radius limits ────────────────────────────────────────────────────────
+blast_radius:
+  # Maximum total actions across ALL services per minute (sliding window)
+  max_actions_per_minute: 3
+  # Maximum restart actions per individual service per hour (sliding window)
+  max_restarts_per_service_per_hour: 5
+
+# ── Circuit breaker ────────────────────────────────────────────────────────────
+circuit_breaker:
+  # Halt automation after this many CONSECUTIVE verify failures
+  consecutive_failure_threshold: 3
+  # reset_mode: manual — operator must restart the process to reset
+  reset_mode: manual
+
+# Format: alertname → list of [script, [extra_args]]
+# Uncomment the block below to enable scenario 4 (multi-step transactional rollback).
+#
+# multi_step_map:
+#   MultiStepDeploy:
+#     - ["runbooks/multi_step_deploy.sh", ["--step-a"]]
+#     - ["runbooks/multi_step_deploy.sh", ["--step-b"]]
+#     - ["runbooks/multi_step_deploy.sh", ["--step-c"]]
+#
+# multi_step_rollback_map:
+#   MultiStepDeploy:
+#     - ["runbooks/multi_step_deploy.sh", ["--rollback-a"]]
+#     - ["runbooks/multi_step_deploy.sh", ["--rollback-b"]]

@@ -1,0 +1,63 @@
+{"timestamp": "2026-06-18T07:58:28.516077", "event": "holdout_validation", "v2_precision": 0.0, "v2_recall": 0.0}
+{"timestamp": "2026-06-18T07:58:35.435954", "event": "promote_v2", "v2_version": "5", "v1_version": "1"}
+{"timestamp": "2026-06-18T07:58:37.259993", "event": "post_deploy_cycle", "cycle": 1, "precision": 1.0, "recall": 1.0, "v2": "5"}
+{"timestamp": "2026-06-18T07:58:38.025207", "event": "post_deploy_cycle", "cycle": 2, "precision": 1.0, "recall": 1.0, "v2": "5"}
+{"timestamp": "2026-06-18T07:58:38.845972", "event": "post_deploy_cycle", "cycle": 3, "precision": 1.0, "recall": 1.0, "v2": "5"}
+{"timestamp": "2026-06-18T07:58:39.629838", "event": "post_deploy_cycle", "cycle": 4, "precision": 1.0, "recall": 1.0, "v2": "5"}
+{"timestamp": "2026-06-18T07:58:40.455518", "event": "post_deploy_cycle", "cycle": 5, "precision": 1.0, "recall": 1.0, "v2": "5"}
+{"timestamp": "2026-06-18T07:58:41.246000", "event": "post_deploy_cycle", "cycle": 6, "precision": 1.0, "recall": 1.0, "v2": "5"}
+{"timestamp": "2026-06-18T07:58:42.071022", "event": "post_deploy_cycle", "cycle": 7, "precision": 1.0, "recall": 1.0, "v2": "5"}
+{"timestamp": "2026-06-18T07:58:43.065299", "event": "post_deploy_cycle", "cycle": 8, "precision": 1.0, "recall": 1.0, "v2": "5"}
+{"timestamp": "2026-06-18T07:58:43.846106", "event": "post_deploy_cycle", "cycle": 9, "precision": 1.0, "recall": 1.0, "v2": "5"}
+{"timestamp": "2026-06-18T07:58:44.873982", "event": "post_deploy_cycle", "cycle": 10, "precision": 1.0, "recall": 1.0, "v2": "5"}
+{"timestamp": "2026-06-18T07:58:45.867542", "event": "post_deploy_cycle", "cycle": 11, "precision": 1.0, "recall": 1.0, "v2": "5"}
+{"timestamp": "2026-06-18T07:58:46.706490", "event": "post_deploy_cycle", "cycle": 12, "precision": 1.0, "recall": 1.0, "v2": "5"}
+{"timestamp": "2026-06-18T07:58:47.529693", "event": "post_deploy_cycle", "cycle": 13, "precision": 1.0, "recall": 1.0, "v2": "5"}
+{"timestamp": "2026-06-18T07:58:48.336457", "event": "post_deploy_cycle", "cycle": 14, "precision": 1.0, "recall": 1.0, "v2": "5"}
+{"timestamp": "2026-06-18T07:58:49.140354", "event": "post_deploy_cycle", "cycle": 15, "precision": 1.0, "recall": 1.0, "v2": "5"}
+{"timestamp": "2026-06-18T07:58:49.972210", "event": "post_deploy_cycle", "cycle": 16, "precision": 1.0, "recall": 1.0, "v2": "5"}
+{"timestamp": "2026-06-18T07:58:50.785478", "event": "post_deploy_cycle", "cycle": 17, "precision": 1.0, "recall": 1.0, "v2": "5"}
+{"timestamp": "2026-06-18T07:58:51.599410", "event": "post_deploy_cycle", "cycle": 18, "precision": 1.0, "recall": 1.0, "v2": "5"}
+{"timestamp": "2026-06-18T07:58:52.425516", "event": "post_deploy_cycle", "cycle": 19, "precision": 1.0, "recall": 1.0, "v2": "5"}
+{"timestamp": "2026-06-18T07:58:53.390335", "event": "post_deploy_cycle", "cycle": 20, "precision": 1.0, "recall": 1.0, "v2": "5"}
+{"timestamp": "2026-06-18T07:58:54.390549", "event": "post_deploy_cycle", "cycle": 21, "precision": 1.0, "recall": 1.0, "v2": "5"}
+{"timestamp": "2026-06-18T07:58:55.290211", "event": "post_deploy_cycle", "cycle": 22, "precision": 1.0, "recall": 1.0, "v2": "5"}
+{"timestamp": "2026-06-18T07:58:55.992635", "event": "post_deploy_cycle", "cycle": 23, "precision": 1.0, "recall": 1.0, "v2": "5"}
+{"timestamp": "2026-06-18T07:58:56.966838", "event": "post_deploy_cycle", "cycle": 24, "precision": 1.0, "recall": 1.0, "v2": "5"}
+{"timestamp": "2026-06-18T07:58:56.978324", "event": "post_deploy_stable", "version": "5", "cycles": 24}
+{"timestamp": "2026-06-18T07:59:43.335215", "event": "holdout_validation", "v2_precision": 0.0, "v2_recall": 0.0}
+{"timestamp": "2026-06-18T07:59:47.723581", "event": "promote_v2", "v2_version": "6", "v1_version": "5"}
+{"timestamp": "2026-06-18T07:59:49.176772", "event": "post_deploy_cycle", "cycle": 1, "precision": 0.4, "recall": 1.0, "v2": "6"}
+{"timestamp": "2026-06-18T07:59:49.346707", "event": "auto_rollback_v2_to_v1", "demoted_version": "6", "restored_version": "5", "trigger_precision": 0.4, "threshold": 0.65, "cycle": 1}
+{"timestamp": "2026-06-18T08:47:38.150341", "event": "holdout_validation", "v1_precision": 0.0, "v1_recall": 0.0, "v1_fpr": 0.0, "v2_precision": 0.0, "v2_recall": 0.0, "v2_fpr": 0.0}
+{"timestamp": "2026-06-18T08:47:43.445253", "event": "promote_v2", "v2_version": "7", "v1_version": "5"}
+{"timestamp": "2026-06-18T08:47:44.578994", "event": "post_deploy_cycle", "cycle": 1, "precision": 0.4, "recall": 1.0, "v2": "7"}
+{"timestamp": "2026-06-18T08:47:44.657882", "event": "simulated_fault_injection", "demoted_version": "7", "restored_version": "5", "trigger_precision": 0.4, "threshold": 0.65, "cycle": 1}
+{"timestamp": "2026-06-18T08:47:44.669195", "event": "auto_rollback_v2_to_v1", "demoted_version": "7", "restored_version": "5", "trigger_precision": 0.4, "threshold": 0.65, "cycle": 1, "is_simulated": true}
+{"timestamp": "2026-06-18T08:48:14.980925", "event": "holdout_validation", "v1_precision": 0.0, "v1_recall": 0.0, "v1_fpr": 0.0, "v2_precision": 0.0, "v2_recall": 0.0, "v2_fpr": 0.0}
+{"timestamp": "2026-06-18T08:48:19.446169", "event": "promote_v2", "v2_version": "8", "v1_version": "5"}
+{"timestamp": "2026-06-18T08:48:20.790385", "event": "post_deploy_cycle", "cycle": 1, "precision": 1.0, "recall": 1.0, "v2": "8"}
+{"timestamp": "2026-06-18T08:48:21.410870", "event": "post_deploy_cycle", "cycle": 2, "precision": 1.0, "recall": 1.0, "v2": "8"}
+{"timestamp": "2026-06-18T08:48:22.008625", "event": "post_deploy_cycle", "cycle": 3, "precision": 1.0, "recall": 1.0, "v2": "8"}
+{"timestamp": "2026-06-18T08:48:22.633823", "event": "post_deploy_cycle", "cycle": 4, "precision": 1.0, "recall": 1.0, "v2": "8"}
+{"timestamp": "2026-06-18T08:48:23.254744", "event": "post_deploy_cycle", "cycle": 5, "precision": 1.0, "recall": 1.0, "v2": "8"}
+{"timestamp": "2026-06-18T08:48:23.744795", "event": "post_deploy_cycle", "cycle": 6, "precision": 1.0, "recall": 1.0, "v2": "8"}
+{"timestamp": "2026-06-18T08:48:24.242733", "event": "post_deploy_cycle", "cycle": 7, "precision": 1.0, "recall": 1.0, "v2": "8"}
+{"timestamp": "2026-06-18T08:48:24.789988", "event": "post_deploy_cycle", "cycle": 8, "precision": 1.0, "recall": 1.0, "v2": "8"}
+{"timestamp": "2026-06-18T08:48:25.257660", "event": "post_deploy_cycle", "cycle": 9, "precision": 1.0, "recall": 1.0, "v2": "8"}
+{"timestamp": "2026-06-18T08:48:25.756960", "event": "post_deploy_cycle", "cycle": 10, "precision": 1.0, "recall": 1.0, "v2": "8"}
+{"timestamp": "2026-06-18T08:48:26.723550", "event": "post_deploy_cycle", "cycle": 11, "precision": 1.0, "recall": 1.0, "v2": "8"}
+{"timestamp": "2026-06-18T08:48:27.163949", "event": "post_deploy_cycle", "cycle": 12, "precision": 1.0, "recall": 1.0, "v2": "8"}
+{"timestamp": "2026-06-18T08:48:27.703692", "event": "post_deploy_cycle", "cycle": 13, "precision": 1.0, "recall": 1.0, "v2": "8"}
+{"timestamp": "2026-06-18T08:48:28.209584", "event": "post_deploy_cycle", "cycle": 14, "precision": 1.0, "recall": 1.0, "v2": "8"}
+{"timestamp": "2026-06-18T08:48:29.040909", "event": "post_deploy_cycle", "cycle": 15, "precision": 1.0, "recall": 1.0, "v2": "8"}
+{"timestamp": "2026-06-18T08:48:32.587542", "event": "post_deploy_cycle", "cycle": 16, "precision": 1.0, "recall": 1.0, "v2": "8"}
+{"timestamp": "2026-06-18T08:48:33.177479", "event": "post_deploy_cycle", "cycle": 17, "precision": 1.0, "recall": 1.0, "v2": "8"}
+{"timestamp": "2026-06-18T08:48:33.737224", "event": "post_deploy_cycle", "cycle": 18, "precision": 1.0, "recall": 1.0, "v2": "8"}
+{"timestamp": "2026-06-18T08:48:34.425706", "event": "post_deploy_cycle", "cycle": 19, "precision": 1.0, "recall": 1.0, "v2": "8"}
+{"timestamp": "2026-06-18T08:48:34.958208", "event": "post_deploy_cycle", "cycle": 20, "precision": 1.0, "recall": 1.0, "v2": "8"}
+{"timestamp": "2026-06-18T08:48:35.484102", "event": "post_deploy_cycle", "cycle": 21, "precision": 1.0, "recall": 1.0, "v2": "8"}
+{"timestamp": "2026-06-18T08:48:35.937567", "event": "post_deploy_cycle", "cycle": 22, "precision": 1.0, "recall": 1.0, "v2": "8"}
+{"timestamp": "2026-06-18T08:48:36.437264", "event": "post_deploy_cycle", "cycle": 23, "precision": 1.0, "recall": 1.0, "v2": "8"}
+{"timestamp": "2026-06-18T08:48:37.011875", "event": "post_deploy_cycle", "cycle": 24, "precision": 1.0, "recall": 1.0, "v2": "8"}
+{"timestamp": "2026-06-18T08:48:37.019890", "event": "post_deploy_stable", "version": "8", "cycles": 24}
