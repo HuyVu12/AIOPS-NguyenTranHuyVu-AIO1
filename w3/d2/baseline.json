@@ -1,0 +1,58 @@
+{
+  "api-gateway": {
+    "http_response_time_ms": {
+      "mean": 25.5,
+      "p99": 120.0
+    },
+    "cpu_utilization_pct": {
+      "mean": 12.0,
+      "p99": 35.0
+    }
+  },
+  "payment-svc": {
+    "http_response_time_ms": {
+      "mean": 45.0,
+      "p99": 180.0
+    },
+    "cpu_utilization_pct": {
+      "mean": 8.5,
+      "p99": 25.0
+    }
+  },
+  "checkout-svc": {
+    "http_response_time_ms": {
+      "mean": 32.0,
+      "p99": 140.0
+    },
+    "cpu_utilization_pct": {
+      "mean": 10.0,
+      "p99": 30.0
+    }
+  },
+  "inventory-svc": {
+    "http_response_time_ms": {
+      "mean": 15.0,
+      "p99": 80.0
+    },
+    "cpu_utilization_pct": {
+      "mean": 5.0,
+      "p99": 18.0
+    }
+  },
+  "auth-svc": {
+    "http_response_time_ms": {
+      "mean": 20.0,
+      "p99": 90.0
+    },
+    "cpu_utilization_pct": {
+      "mean": 6.0,
+      "p99": 22.0
+    }
+  },
+  "frontend": {
+    "page_load_time_ms": {
+      "mean": 180.0,
+      "p99": 450.0
+    }
+  }
+}

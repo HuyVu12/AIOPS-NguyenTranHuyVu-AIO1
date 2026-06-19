@@ -1,0 +1,240 @@
+[
+  {
+    "id": 1,
+    "name": "payment_latency",
+    "detected": true,
+    "mttd": 28,
+    "rca_service": "payment-svc",
+    "rca_correct": true,
+    "observed_at_ts": 1781753529,
+    "raw": {
+      "alerts": [
+        {
+          "fire_ts": 1781753557,
+          "name": "payment_latency_alert",
+          "service": "payment-svc"
+        }
+      ],
+      "rca": {
+        "root_service": "payment-svc",
+        "confidence": 0.88,
+        "evidence": "Observed metrics drift"
+      },
+      "mttd_seconds": 28,
+      "detected": true
+    }
+  },
+  {
+    "id": 2,
+    "name": "payment_loss",
+    "detected": true,
+    "mttd": 22,
+    "rca_service": "payment-svc",
+    "rca_correct": true,
+    "observed_at_ts": 1781753531,
+    "raw": {
+      "alerts": [
+        {
+          "fire_ts": 1781753553,
+          "name": "payment_loss_alert",
+          "service": "payment-svc"
+        }
+      ],
+      "rca": {
+        "root_service": "payment-svc",
+        "confidence": 0.88,
+        "evidence": "Observed metrics drift"
+      },
+      "mttd_seconds": 22,
+      "detected": true
+    }
+  },
+  {
+    "id": 3,
+    "name": "inventory_kill",
+    "detected": true,
+    "mttd": 12,
+    "rca_service": "inventory-svc",
+    "rca_correct": true,
+    "observed_at_ts": 1781753533,
+    "raw": {
+      "alerts": [
+        {
+          "fire_ts": 1781753545,
+          "name": "inventory_kill_alert",
+          "service": "inventory-svc"
+        }
+      ],
+      "rca": {
+        "root_service": "inventory-svc",
+        "confidence": 0.88,
+        "evidence": "Observed metrics drift"
+      },
+      "mttd_seconds": 12,
+      "detected": true
+    }
+  },
+  {
+    "id": 4,
+    "name": "gateway_cpu",
+    "detected": true,
+    "mttd": 15,
+    "rca_service": "api-gateway",
+    "rca_correct": true,
+    "observed_at_ts": 1781753535,
+    "raw": {
+      "alerts": [
+        {
+          "fire_ts": 1781753550,
+          "name": "gateway_cpu_alert",
+          "service": "api-gateway"
+        }
+      ],
+      "rca": {
+        "root_service": "api-gateway",
+        "confidence": 0.88,
+        "evidence": "Observed metrics drift"
+      },
+      "mttd_seconds": 15,
+      "detected": true
+    }
+  },
+  {
+    "id": 5,
+    "name": "db_memory",
+    "detected": true,
+    "mttd": 32,
+    "rca_service": "payment-db",
+    "rca_correct": true,
+    "observed_at_ts": 1781753537,
+    "raw": {
+      "alerts": [
+        {
+          "fire_ts": 1781753569,
+          "name": "db_memory_alert",
+          "service": "payment-db"
+        }
+      ],
+      "rca": {
+        "root_service": "payment-db",
+        "confidence": 0.88,
+        "evidence": "Observed metrics drift"
+      },
+      "mttd_seconds": 32,
+      "detected": true
+    }
+  },
+  {
+    "id": 6,
+    "name": "auth_skew",
+    "detected": true,
+    "mttd": 45,
+    "rca_service": "auth-svc",
+    "rca_correct": true,
+    "observed_at_ts": 1781753539,
+    "raw": {
+      "alerts": [
+        {
+          "fire_ts": 1781753584,
+          "name": "auth_skew_alert",
+          "service": "auth-svc"
+        }
+      ],
+      "rca": {
+        "root_service": "auth-svc",
+        "confidence": 0.88,
+        "evidence": "Observed metrics drift"
+      },
+      "mttd_seconds": 45,
+      "detected": true
+    }
+  },
+  {
+    "id": 7,
+    "name": "log_disk",
+    "detected": false,
+    "mttd": null,
+    "rca_service": null,
+    "rca_correct": false,
+    "observed_at_ts": 1781753542,
+    "raw": {
+      "alerts": [],
+      "rca": {
+        "root_service": null,
+        "confidence": 0.0,
+        "evidence": "Observed metrics drift"
+      },
+      "mttd_seconds": null,
+      "detected": false
+    }
+  },
+  {
+    "id": 8,
+    "name": "gateway_partition",
+    "detected": true,
+    "mttd": 18,
+    "rca_service": "frontend",
+    "rca_correct": true,
+    "observed_at_ts": 1781753544,
+    "raw": {
+      "alerts": [
+        {
+          "fire_ts": 1781753562,
+          "name": "gateway_partition_alert",
+          "service": "frontend"
+        }
+      ],
+      "rca": {
+        "root_service": "frontend",
+        "confidence": 0.88,
+        "evidence": "Observed metrics drift"
+      },
+      "mttd_seconds": 18,
+      "detected": true
+    }
+  },
+  {
+    "id": 9,
+    "name": "dns_latency",
+    "detected": false,
+    "mttd": null,
+    "rca_service": null,
+    "rca_correct": false,
+    "observed_at_ts": 1781753546,
+    "raw": {
+      "alerts": [],
+      "rca": {
+        "root_service": null,
+        "confidence": 0.0,
+        "evidence": "Observed metrics drift"
+      },
+      "mttd_seconds": null,
+      "detected": false
+    }
+  },
+  {
+    "id": 10,
+    "name": "checkout_retry_storm",
+    "detected": true,
+    "mttd": 35,
+    "rca_service": "payment-svc",
+    "rca_correct": true,
+    "observed_at_ts": 1781753548,
+    "raw": {
+      "alerts": [
+        {
+          "fire_ts": 1781753583,
+          "name": "checkout_retry_storm_alert",
+          "service": "checkout-svc"
+        }
+      ],
+      "rca": {
+        "root_service": "payment-svc",
+        "confidence": 0.88,
+        "evidence": "Observed metrics drift"
+      },
+      "mttd_seconds": 35,
+      "detected": true
+    }
+  }
+]

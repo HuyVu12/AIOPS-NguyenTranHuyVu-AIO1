@@ -1,0 +1,1 @@
+﻿{"root_cause":"api","confidence":1.0,"root_cause_class":"thread_starvation","reasoning":"Matched historical incident INC-2026-01-04 with TF-IDF similarity 0.2780.","recommended_actions":["Switch to async client","Bulkhead thread pool size limit"],"similar_incidents":["INC-2026-01-04"]}
