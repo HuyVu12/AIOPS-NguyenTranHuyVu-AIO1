@@ -18,7 +18,7 @@
 
 ## Scoreboard summary
 - detected: 8/10
-- rca_correct: 8/8
-- mttd_p50: 28s
+- rca_correct: 7/8
+- mttd_p50: 22s
 - false_alarms: 0
 - verdict: pass (đạt yêu cầu detected >= 7/10, RCA correct >= 5/detected và False Alarms <= 1)

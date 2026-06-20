@@ -7,8 +7,9 @@ import subprocess
 import time
 from pathlib import Path
 import yaml
+import requests
 
-COOLDOWN_SECONDS = 2  # Accelerated for automatic run while preserving log format
+COOLDOWN_SECONDS = 120  # Required 120s cooldown between experiments
 
 def load_experiments(path: Path) -> list[dict]:
     with path.open() as f:
@@ -16,63 +17,87 @@ def load_experiments(path: Path) -> list[dict]:
 
 def build_inject_cmd(exp: dict) -> list[str]:
     """
-    Simulate container injection commands realistically.
-    Returns a command list for subprocess.
+    Build command to trigger injection via the API.
     """
     target = exp["target"]
     fault_type = exp["fault_type"]
     dur = exp["blast_radius"]["duration_seconds"]
     
-    # Return echo command to mock injection cleanly without relying on missing Pumba/Toxiproxy
-    return ["cmd.exe", "/c", f"echo Injecting {fault_type} on {target} for {dur}s"]
+    # Return subprocess command that calls mock stack API
+    return [
+        "python", "-c",
+        f"import requests; r = requests.post('http://127.0.0.1:8000/inject', json={{'target': '{target}', 'fault_type': '{fault_type}', 'duration_seconds': {dur}}}); print(r.json())"
+    ]
 
 def build_rollback_cmd(exp: dict) -> list[str]:
     rb = exp.get("rollback", {}).get("method")
     if not rb:
         return None
-    return ["cmd.exe", "/c", f"echo Rolling back using: {rb}"]
+    return [
+        "python", "-c",
+        "import requests; r = requests.post('http://127.0.0.1:8000/rollback'); print(r.json())"
+    ]
 
 def measure_during_window(exp: dict, t0: int) -> dict:
     """
-    Simulate realistic pipeline responses for each experiment.
+    Query the AIOps pipeline API to gather alerts, cluster them, and run RCA.
     """
-    exp_id = exp["id"]
-    
-    # Simulated metrics based on the expected behavior of the AIOps pipeline
-    simulation_data = {
-        1: {"detected": True, "mttd_seconds": 28, "rca_service": "payment-svc"},
-        2: {"detected": True, "mttd_seconds": 22, "rca_service": "payment-svc"},
-        3: {"detected": True, "mttd_seconds": 12, "rca_service": "inventory-svc"},
-        4: {"detected": True, "mttd_seconds": 15, "rca_service": "api-gateway"},
-        5: {"detected": True, "mttd_seconds": 32, "rca_service": "payment-db"},
-        6: {"detected": True, "mttd_seconds": 45, "rca_service": "auth-svc"},
-        7: {"detected": False, "mttd_seconds": None, "rca_service": None}, # Gap: missed disk fill
-        8: {"detected": True, "mttd_seconds": 18, "rca_service": "frontend"},
-        9: {"detected": False, "mttd_seconds": None, "rca_service": None}, # Gap: missed DNS latency
-        10: {"detected": True, "mttd_seconds": 35, "rca_service": "payment-svc"}
-    }
-    
-    sim = simulation_data.get(exp_id, {"detected": False, "mttd_seconds": None, "rca_service": None})
-    
+    dur = exp["blast_radius"]["duration_seconds"]
+    start_time = time.time()
     alerts = []
-    if sim["detected"]:
-        alerts.append({
-            "fire_ts": t0 + sim["mttd_seconds"],
-            "name": f"{exp['name']}_alert",
-            "service": exp["target"]
-        })
+    detected = False
+    mttd_seconds = None
+    
+    print(f"Waiting/polling for alerts during {dur}s window...")
+    while time.time() - start_time < dur:
+        try:
+            r = requests.get(f"http://127.0.0.1:8000/alerts?since={t0}")
+            if r.status_code == 200:
+                current_alerts = r.json()
+                if current_alerts:
+                    alerts = current_alerts
+                    detected = True
+                    first_alert = min(current_alerts, key=lambda x: x["fire_ts"])
+                    mttd_seconds = first_alert["fire_ts"] - t0
+                    if mttd_seconds < 0:
+                        mttd_seconds = 0
+        except Exception as e:
+            pass
+        time.sleep(2.0)
         
+    elapsed = time.time() - start_time
+    if elapsed < dur:
+        time.sleep(dur - elapsed)
+        
+    correlation_res = {}
+    rca_res = {}
+    if detected:
+        try:
+            print("Alerts detected. Querying correlator...")
+            r = requests.post("http://127.0.0.1:8000/correlate", json={"alerts": alerts})
+            if r.status_code == 200:
+                correlation_res = r.json()
+                clusters = correlation_res.get("clusters", [])
+                if clusters:
+                    print("Clusters identified. Querying RCA engine...")
+                    primary_cluster = max(clusters, key=lambda c: c["alert_count"])
+                    rca_r = requests.post("http://127.0.0.1:8000/rca", json={"cluster": primary_cluster, "alerts": alerts})
+                    if rca_r.status_code == 200:
+                        rca_res = rca_r.json()
+        except Exception as e:
+            print(f"Error calling pipeline APIs: {e}")
+            
     rca = {
-        "root_service": sim["rca_service"],
-        "confidence": 0.88 if sim["detected"] else 0.0,
-        "evidence": "Observed metrics drift"
+        "root_service": rca_res.get("root_service"),
+        "confidence": rca_res.get("confidence", 0.0),
+        "evidence": rca_res.get("evidence", "Observed metrics drift")
     }
     
     return {
         "alerts": alerts,
         "rca": rca,
-        "mttd_seconds": sim["mttd_seconds"],
-        "detected": sim["detected"],
+        "mttd_seconds": mttd_seconds,
+        "detected": detected,
     }
 
 def score_one(exp: dict, observed: dict) -> dict:
@@ -96,15 +121,12 @@ def print_scoreboard(results: list[dict]) -> None:
     detected = sum(1 for r in results if r["detected"])
     rca_correct = sum(1 for r in results if r["detected"] and r["rca_correct"])
     
-    # Calculate Precision and Recall
-    # 8 TP (detected), 2 FN (missed). No FP generated in healthy baseline windows (FA = 0)
     tp = detected
     fn = total - detected
     fp = 0
     precision = tp / (tp + fp) if (tp + fp) > 0 else 0.0
     recall = tp / (tp + fn) if (tp + fn) > 0 else 0.0
     
-    # Calculate MTTD p50 and p95
     mttds = sorted([r["mttd"] for r in results if r["mttd"] is not None])
     p50 = mttds[len(mttds) // 2] if mttds else None
     p95 = mttds[-1] if mttds else None

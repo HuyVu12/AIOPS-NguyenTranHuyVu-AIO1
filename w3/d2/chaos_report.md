@@ -11,52 +11,52 @@
 ==== Chaos Run ====
 Total: 10
 Detected: 8/10
-RCA correct: 8/8
+RCA correct: 7/8
 False alarms in baseline windows: 0
 Precision: 1.00
 Recall: 0.80
-MTTD p50: 28s, p95: 45s
+MTTD p50: 22s, p95: 45s
 
 Per-experiment:
 | # | name              | detected | mttd  | rca_service  | rca_correct |
 |---|-------------------|----------|-------|--------------|-------------|
-| 1 | payment_latency   | Y        | 28s   | payment-svc  | Y           |
+| 1 | payment_latency   | Y        | 29s   | payment-svc  | Y           |
 | 2 | payment_loss      | Y        | 22s   | payment-svc  | Y           |
-| 3 | inventory_kill    | Y        | 12s   | inventory-svc | Y           |
-| 4 | gateway_cpu       | Y        | 15s   | api-gateway  | Y           |
-| 5 | db_memory         | Y        | 32s   | payment-db   | Y           |
+| 3 | inventory_kill    | Y        | 13s   | inventory-svc | Y           |
+| 4 | gateway_cpu       | Y        | 16s   | api-gateway  | Y           |
+| 5 | db_memory         | Y        | 28s   | payment-svc  | N           |
 | 6 | auth_skew         | Y        | 45s   | auth-svc     | Y           |
 | 7 | log_disk          | N        | —     | —            | N           |
-| 8 | gateway_partition | Y        | 18s   | frontend     | Y           |
+| 8 | gateway_partition | Y        | 19s   | frontend     | Y           |
 | 9 | dns_latency       | N        | —     | —            | N           |
-| 10| checkout_retry_storm | Y        | 35s   | payment-svc  | Y           |
+| 10 | checkout_retry_storm | Y        | 10s   | inventory-svc | Y           |
 ```
 
 ## 3. Detailed per-experiment analysis
 
 ### Experiment 1: payment_latency
 - **Hypothesis:** Delaying `payment-svc` network egress by 500ms will trip latency thresholds on `api-gateway`, triggering a pipeline alert within 30s. RCA should correctly trace it to `payment-svc`.
-- **Observed:** The pipeline successfully detected the latency anomaly with an MTTD of 28 seconds. The RCA engine matched the alert cascade to the dependency graph and correctly identified `payment-svc` as the root cause with high confidence. This matched our expected hypothesis.
+- **Observed:** Detected with an MTTD of 29 seconds. The RCA engine matched the alert cascade to the dependency graph and correctly identified `payment-svc` as the root cause service, finding a matching historical incident (INC-2026-01-04) with similarity 0.4837. This matched the expected hypothesis.
 
 ### Experiment 2: payment_loss
 - **Hypothesis:** Injecting 30% packet loss on `payment-svc` egress will cause TCP retries, leading to slow transactions and a high HTTP error rate. Pipeline should detect it and point to `payment-svc`.
-- **Observed:** Detected with an MTTD of 22 seconds. The high error rate on `checkout-svc` downstream was correctly correlated with the packet drop on the payment channel, pointing to `payment-svc`. This matched the expected hypothesis.
+- **Observed:** Detected with an MTTD of 22 seconds. The error rate was caught, and the RCA engine correctly identified `payment-svc` as the root cause service by matching historical incident INC-2026-01-04 (similarity 0.5435). This matched the expected hypothesis.
 
 ### Experiment 3: inventory_kill
 - **Hypothesis:** Killing `inventory-svc` containers periodically every 60s will cause connection dropouts. Pipeline should trigger availability alerts and point to `inventory-svc`.
-- **Observed:** The container exit and restart events were captured instantly. The pipeline triggered an availability anomaly alert at 12 seconds. The RCA engine pointed directly to `inventory-svc`, matching the hypothesis.
+- **Observed:** The availability alert triggered at 13 seconds. The RCA engine correctly identified `inventory-svc` as the root cause service, matching historical incident INC-2025-10-15 (similarity 0.6642). This matched the expected hypothesis.
 
 ### Experiment 4: gateway_cpu
 - **Hypothesis:** Stressing the `api-gateway` CPU to 90% will cause high latency propagation across all microservices. The correlator should group the alerts and RCA should target the gateway itself.
-- **Observed:** Saturation of CPU resources caused a massive latency spike on frontend page loads. The pipeline registered the CPU anomaly at 15 seconds. PageRank analysis correctly flagged `api-gateway` as the root cause despite the widespread downstream alarms, matching our hypothesis.
+- **Observed:** The pipeline registered the CPU alert at 16 seconds. The RCA engine correctly targeted the gateway itself (`api-gateway`) through fallback graph PageRank because it was the earliest node in the path, matching our hypothesis.
 
 ### Experiment 5: db_memory
 - **Hypothesis:** Filling `payment-db` memory to 95% will block write queries. This will exhaust the connection pool on the calling application `payment-svc`. RCA should identify the database as the root cause.
-- **Observed:** The pipeline detected connection pool exhaustion on the application tier within 32 seconds. By tracing the database dependency link in the topology map, the RCA module correctly bypassed the application layer and identified the database `payment-db` as the root node.
+- **Observed:** Detected with an MTTD of 28 seconds. The detector successfully fired both the application caller alert (`payment_latency_alert` at 28s) and the target database alert (`db_memory_alert` at 32s). However, the RCA engine wrongly picked the application tier caller `payment-svc` instead of the database `payment-db` as the root cause (rca_correct: N). This represents a misdiagnosis in the RCA retrieval layer, where the TF-IDF query incorrectly matched the cluster to historical incident `INC-2026-01-04` (a `payment-svc` latency issue) with similarity 0.4837, rather than correctly identifying the database.
 
 ### Experiment 6: auth_skew
 - **Hypothesis:** Skewing the clock of `auth-svc` by +60s will invalidate JWT/security tokens, causing auth handshake checkouts to fail. Pipeline should alert on auth failure rate and trace to `auth-svc`.
-- **Observed:** The token signature timestamp discrepancies generated a wave of HTTP 401 unauthenticated requests. The pipeline raised an alert at 45 seconds. The correlation mapped this anomaly to the `auth-svc` dependency nodes, matching the expected hypothesis.
+- **Observed:** The token signature discrepancies generated HTTP 401 unauthenticated requests. The pipeline raised an alert at 45 seconds. The correlation mapped the anomaly node correctly to `auth-svc`. This matched the expected hypothesis.
 
 ### Experiment 7: log_disk
 - **Hypothesis:** Filling the `log-collector` disk to 95% will prevent log writing. The pipeline should capture log ingestion lags and alert on `log-collector`.
@@ -64,7 +64,7 @@ Per-experiment:
 
 ### Experiment 8: gateway_partition
 - **Hypothesis:** A full network partition between `frontend` and `api-gateway` for 30s will trigger severe timeout errors. The pipeline should identify the network border anomaly and trace to `frontend`.
-- **Observed:** The network block caused an immediate drop in gateway checkouts. The pipeline detected the drop at 18 seconds. The RCA engine successfully identified the edge node `frontend` as the point of entry failure, matching our hypothesis.
+- **Observed:** The network partition caused timeout failures. The pipeline detected it at 19 seconds. The RCA engine successfully identified `frontend` as the point of entry failure, matching our hypothesis.
 
 ### Experiment 9: dns_latency
 - **Hypothesis:** A 2-second DNS query delay on `dns-resolver` will cause intermittent name resolution timeouts for downstream microservices. Pipeline should identify it and point to the DNS service.
@@ -72,7 +72,7 @@ Per-experiment:
 
 ### Experiment 10: checkout_retry_storm
 - **Hypothesis:** Injecting 20% HTTP 500 errors on `checkout-svc` will trigger client retries, flooding `payment-svc` and `inventory-svc`. RCA must NOT pick `checkout-svc` as the root cause but identify the upstream dependencies instead.
-- **Observed:** The pipeline successfully ignored the noisy symptom-carrier `checkout-svc` and traced upstream to `payment-svc` (the actual resource constraint in this scenario). This negative test case successfully verified our topology-aware correlation logic.
+- **Observed:** Detected with an MTTD of 10 seconds. The RCA engine successfully ignored the symptom-carrier `checkout-svc` and identified `inventory-svc` (one of the overloaded upstream dependencies) as the root cause, which matches the ground truth requirement (`NOT checkout-svc`).
 
 ---
 

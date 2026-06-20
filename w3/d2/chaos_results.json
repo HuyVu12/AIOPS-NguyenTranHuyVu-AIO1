@@ -3,24 +3,24 @@
     "id": 1,
     "name": "payment_latency",
     "detected": true,
-    "mttd": 28,
+    "mttd": 29,
     "rca_service": "payment-svc",
     "rca_correct": true,
-    "observed_at_ts": 1781753529,
+    "observed_at_ts": 1781970290,
     "raw": {
       "alerts": [
         {
-          "fire_ts": 1781753557,
+          "fire_ts": 1781970319,
           "name": "payment_latency_alert",
           "service": "payment-svc"
         }
       ],
       "rca": {
         "root_service": "payment-svc",
-        "confidence": 0.88,
-        "evidence": "Observed metrics drift"
+        "confidence": 1.0,
+        "evidence": "Matched historical incident INC-2026-01-04 with TF-IDF similarity 0.4837."
       },
-      "mttd_seconds": 28,
+      "mttd_seconds": 29,
       "detected": true
     }
   },
@@ -31,19 +31,24 @@
     "mttd": 22,
     "rca_service": "payment-svc",
     "rca_correct": true,
-    "observed_at_ts": 1781753531,
+    "observed_at_ts": 1781970472,
     "raw": {
       "alerts": [
         {
-          "fire_ts": 1781753553,
+          "fire_ts": 1781970494,
           "name": "payment_loss_alert",
           "service": "payment-svc"
+        },
+        {
+          "fire_ts": 1781970507,
+          "name": "checkout_retry_storm_alert",
+          "service": "checkout-svc"
         }
       ],
       "rca": {
         "root_service": "payment-svc",
-        "confidence": 0.88,
-        "evidence": "Observed metrics drift"
+        "confidence": 0.724,
+        "evidence": "Matched historical incident INC-2026-01-04 with TF-IDF similarity 0.4614."
       },
       "mttd_seconds": 22,
       "detected": true
@@ -53,24 +58,24 @@
     "id": 3,
     "name": "inventory_kill",
     "detected": true,
-    "mttd": 12,
+    "mttd": 13,
     "rca_service": "inventory-svc",
     "rca_correct": true,
-    "observed_at_ts": 1781753533,
+    "observed_at_ts": 1781970653,
     "raw": {
       "alerts": [
         {
-          "fire_ts": 1781753545,
+          "fire_ts": 1781970666,
           "name": "inventory_kill_alert",
           "service": "inventory-svc"
         }
       ],
       "rca": {
         "root_service": "inventory-svc",
-        "confidence": 0.88,
-        "evidence": "Observed metrics drift"
+        "confidence": 1.0,
+        "evidence": "Matched historical incident INC-2025-10-15 with TF-IDF similarity 0.6642."
       },
-      "mttd_seconds": 12,
+      "mttd_seconds": 13,
       "detected": true
     }
   },
@@ -78,24 +83,24 @@
     "id": 4,
     "name": "gateway_cpu",
     "detected": true,
-    "mttd": 15,
+    "mttd": 16,
     "rca_service": "api-gateway",
     "rca_correct": true,
-    "observed_at_ts": 1781753535,
+    "observed_at_ts": 1781970955,
     "raw": {
       "alerts": [
         {
-          "fire_ts": 1781753550,
+          "fire_ts": 1781970971,
           "name": "gateway_cpu_alert",
           "service": "api-gateway"
         }
       ],
       "rca": {
         "root_service": "api-gateway",
-        "confidence": 0.88,
-        "evidence": "Observed metrics drift"
+        "confidence": 1.0,
+        "evidence": "No similar historical incidents found. Fallback to top graph candidate."
       },
-      "mttd_seconds": 15,
+      "mttd_seconds": 16,
       "detected": true
     }
   },
@@ -103,24 +108,29 @@
     "id": 5,
     "name": "db_memory",
     "detected": true,
-    "mttd": 32,
-    "rca_service": "payment-db",
-    "rca_correct": true,
-    "observed_at_ts": 1781753537,
+    "mttd": 28,
+    "rca_service": "payment-svc",
+    "rca_correct": false,
+    "observed_at_ts": 1781971137,
     "raw": {
       "alerts": [
         {
-          "fire_ts": 1781753569,
+          "fire_ts": 1781971165,
+          "name": "payment_latency_alert",
+          "service": "payment-svc"
+        },
+        {
+          "fire_ts": 1781971169,
           "name": "db_memory_alert",
           "service": "payment-db"
         }
       ],
       "rca": {
-        "root_service": "payment-db",
-        "confidence": 0.88,
-        "evidence": "Observed metrics drift"
+        "root_service": "payment-svc",
+        "confidence": 1.0,
+        "evidence": "Matched historical incident INC-2026-01-04 with TF-IDF similarity 0.4837."
       },
-      "mttd_seconds": 32,
+      "mttd_seconds": 28,
       "detected": true
     }
   },
@@ -131,19 +141,19 @@
     "mttd": 45,
     "rca_service": "auth-svc",
     "rca_correct": true,
-    "observed_at_ts": 1781753539,
+    "observed_at_ts": 1781971349,
     "raw": {
       "alerts": [
         {
-          "fire_ts": 1781753584,
+          "fire_ts": 1781971394,
           "name": "auth_skew_alert",
           "service": "auth-svc"
         }
       ],
       "rca": {
         "root_service": "auth-svc",
-        "confidence": 0.88,
-        "evidence": "Observed metrics drift"
+        "confidence": 1.0,
+        "evidence": "Matched historical incident INC-2025-11-19 with TF-IDF similarity 0.6011."
       },
       "mttd_seconds": 45,
       "detected": true
@@ -156,7 +166,7 @@
     "mttd": null,
     "rca_service": null,
     "rca_correct": false,
-    "observed_at_ts": 1781753542,
+    "observed_at_ts": 1781971590,
     "raw": {
       "alerts": [],
       "rca": {
@@ -172,24 +182,24 @@
     "id": 8,
     "name": "gateway_partition",
     "detected": true,
-    "mttd": 18,
+    "mttd": 19,
     "rca_service": "frontend",
     "rca_correct": true,
-    "observed_at_ts": 1781753544,
+    "observed_at_ts": 1781971832,
     "raw": {
       "alerts": [
         {
-          "fire_ts": 1781753562,
+          "fire_ts": 1781971851,
           "name": "gateway_partition_alert",
           "service": "frontend"
         }
       ],
       "rca": {
         "root_service": "frontend",
-        "confidence": 0.88,
-        "evidence": "Observed metrics drift"
+        "confidence": 1.0,
+        "evidence": "No similar historical incidents found. Fallback to top graph candidate."
       },
-      "mttd_seconds": 18,
+      "mttd_seconds": 19,
       "detected": true
     }
   },
@@ -200,7 +210,7 @@
     "mttd": null,
     "rca_service": null,
     "rca_correct": false,
-    "observed_at_ts": 1781753546,
+    "observed_at_ts": 1781971984,
     "raw": {
       "alerts": [],
       "rca": {
@@ -216,24 +226,34 @@
     "id": 10,
     "name": "checkout_retry_storm",
     "detected": true,
-    "mttd": 35,
-    "rca_service": "payment-svc",
+    "mttd": 10,
+    "rca_service": "inventory-svc",
     "rca_correct": true,
-    "observed_at_ts": 1781753548,
+    "observed_at_ts": 1781972166,
     "raw": {
       "alerts": [
         {
-          "fire_ts": 1781753583,
+          "fire_ts": 1781972176,
+          "name": "payment_retry_load_alert",
+          "service": "payment-svc"
+        },
+        {
+          "fire_ts": 1781972176,
+          "name": "inventory_retry_load_alert",
+          "service": "inventory-svc"
+        },
+        {
+          "fire_ts": 1781972201,
           "name": "checkout_retry_storm_alert",
           "service": "checkout-svc"
         }
       ],
       "rca": {
-        "root_service": "payment-svc",
-        "confidence": 0.88,
-        "evidence": "Observed metrics drift"
+        "root_service": "inventory-svc",
+        "confidence": 0.622,
+        "evidence": "Matched historical incident INC-2025-10-15 with TF-IDF similarity 0.6220."
       },
-      "mttd_seconds": 35,
+      "mttd_seconds": 10,
       "detected": true
     }
   }
